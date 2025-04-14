@@ -1,31 +1,20 @@
 
 import React, {useReducer} from 'react'
-import { UserContext } from './main'
-import { Button } from 'react-bootstrap'
 import {v4 as uuidv4} from 'uuid'
 import ToDoList from './ToDoList'
 
 
 const todosInitialState = {
-  todos: [
-    { id: 1, text: 'Learn React', completed: false },
-    { id: 2, text: 'Learn Redux', completed: false },
-    { id: 3, text: 'Learn React Router', completed: false },
-  ],
+  todos: []
 }
 
 const todosReducer = (state, action) => {
   switch (action.type) {
+    case 'get':
+      console.log('get', action.payload.text)
+      return {...state, todos: action.payload.text}
     case 'add':
-      if (!action.payload.text) {
-        return state
-      }
-      const newToDo = {
-        id: uuidv4(), 
-        text: action.payload.text, 
-        completed: false
-      }
-      const addedToDos = [...state.todos, newToDo]
+      const addedToDos = [...state.todos, action.payload.text]
       return {...state, todos: addedToDos}
     case 'delete':
       const filteredTodos = state.todos.filter(

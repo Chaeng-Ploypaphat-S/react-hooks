@@ -1,0 +1,31 @@
+{
+  "todos": [
+    {
+      "id": "2",
+      "text": "ploy with react-query"
+    },
+    {
+      "id": "3",
+      "text": "read TS book"
+    },
+    {
+      "id": "4",
+      "text": "work on c# project"
+    },
+    {
+      "id": "0fc583ea-b8c5-4bb4-a75a-60105f16c553",
+      "text": "holulu",
+      "completed": false
+    },
+    {
+      "id": "9c363d8c-9fa7-4e0c-a32c-1dc2c6b89aa3",
+      "text": "New Task",
+      "completed": false
+    },
+    {
+      "id": "8c721de5-db2c-4277-a0cd-0d6359f9d7a2",
+      "text": "A good task",
+      "completed": false
+    }
+  ]
+}

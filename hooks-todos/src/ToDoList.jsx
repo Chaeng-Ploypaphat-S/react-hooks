@@ -1,6 +1,9 @@
-import React, {use, useState} from "react"
+import React, {use, useState, useEffect} from "react"
 import { Table, Form, Button } from "react-bootstrap"
 import { TodosContext } from "./App"
+import useAPI from "./useAPI"
+import axios from "axios"
+import { v4 as uuidv4 } from "uuid"
 
 
 function ToDoList() {
@@ -10,20 +13,34 @@ function ToDoList() {
     const [editTodo, setEditTodo] = useState(null)
     const buttonTitle = editMode ? "Edit" : "Add"
 
+    const endpoint = "http://localhost:3000/todos"
+    const savedTodos = useAPI(endpoint)
+
+    useEffect(() => {
+        dispatch({type:'get', payload:{text:savedTodos}})
+    }, [savedTodos])
+
     const handleSubmit = async(fromData) => {
         if (editMode) {
+            await axios.patch(endpoint + editTodo, {text: todoText})
             dispatch({type:'edit', payload:{id:editTodo, text:todoText}})
             setEditMode(false)
             setEditTodo(null)
         } else {
-            dispatch({type:'add', payload:{text:todoText}})
+            const newToDo = {
+                id: uuidv4(), 
+                text: todoText, 
+                completed: false
+            }
+            const response = await axios.post(endpoint, newToDo)
+            dispatch({type:'add', payload:{text:newToDo}})
         }
         setTodoText("") // Clear the input field after submission
     }
 
     return (
     <div style={{padding: 5}}>
-        <Form action={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
             <Form.Group controlId="todoForm">
                 <Form.Label>To Do</Form.Label>
                 <Form.Control 
@@ -46,7 +63,7 @@ function ToDoList() {
             </tr>
         </thead>
         <tbody>
-            {state.todos.map(todo => (
+            {(state.todos || []).map(todo => (
             <tr key={todo.id}>
                 <td>{todo.text}</td>
                 <td onClick={()=>{
@@ -54,12 +71,14 @@ function ToDoList() {
                     setEditMode(true)
                     setEditTodo(todo.id)
                 }}>
-                    Edit
+                <Button variant="link">Edit</Button>
                 </td>
-                <td onClick={()=> 
-                    dispatch({type:'delete', payload:todo}
-                )}>
-                    Delete
+                <td onClick={(async)=>{
+                    axios.delete(endpoint + "/" + todo.id)
+                    dispatch({type:'delete', payload:todo})
+                
+                }}>
+                    <Button variant="link">Delete</Button>
                 </td>
             </tr>
             ))}
