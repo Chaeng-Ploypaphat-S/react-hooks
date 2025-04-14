@@ -1,6 +1,6 @@
+import { TodosContext } from "./App"
 import React, {use, useState, useEffect} from "react"
 import { Table, Form, Button } from "react-bootstrap"
-import { TodosContext } from "./App"
 import useAPI from "./useAPI"
 import axios from "axios"
 import { v4 as uuidv4 } from "uuid"
@@ -17,13 +17,13 @@ function ToDoList() {
     const savedTodos = useAPI(endpoint)
 
     useEffect(() => {
-        dispatch({type:'get', payload:{text:savedTodos}})
+        dispatch({type:'get', payload:savedTodos})
     }, [savedTodos])
 
     const handleSubmit = async(fromData) => {
         if (editMode) {
             await axios.patch(endpoint + editTodo, {text: todoText})
-            dispatch({type:'edit', payload:{id:editTodo, text:todoText}})
+            dispatch({type:'edit', payload:{...editTodo, text: todoText}})
             setEditMode(false)
             setEditTodo(null)
         } else {
@@ -32,8 +32,8 @@ function ToDoList() {
                 text: todoText, 
                 completed: false
             }
-            const response = await axios.post(endpoint, newToDo)
-            dispatch({type:'add', payload:{text:newToDo}})
+            await axios.post(endpoint, newToDo)
+            dispatch({type:'add', payload: newToDo})
         }
         setTodoText("") // Clear the input field after submission
     }

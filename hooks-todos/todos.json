@@ -1,30 +1,22 @@
 {
   "todos": [
     {
-      "id": "2",
-      "text": "ploy with react-query"
-    },
-    {
-      "id": "3",
-      "text": "read TS book"
-    },
-    {
       "id": "4",
       "text": "work on c# project"
     },
     {
-      "id": "0fc583ea-b8c5-4bb4-a75a-60105f16c553",
-      "text": "holulu",
+      "id": "9f538bbf-14a0-4a96-a84d-f22c257b6c57",
+      "text": "work on TS project",
       "completed": false
     },
     {
-      "id": "9c363d8c-9fa7-4e0c-a32c-1dc2c6b89aa3",
-      "text": "New Task",
+      "id": "3ffeb09d-89b9-4f9c-b799-57dabf45c468",
+      "text": "work on FastAPI",
       "completed": false
     },
     {
-      "id": "8c721de5-db2c-4277-a0cd-0d6359f9d7a2",
-      "text": "A good task",
+      "id": "b1ef423b-83c5-410a-9feb-45ec97f0066c",
+      "text": "Test AWS",
       "completed": false
     }
   ]

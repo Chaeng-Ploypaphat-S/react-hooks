@@ -1,6 +1,5 @@
 
 import React, {useReducer} from 'react'
-import {v4 as uuidv4} from 'uuid'
 import ToDoList from './ToDoList'
 
 
@@ -8,13 +7,14 @@ const todosInitialState = {
   todos: []
 }
 
+export const TodosContext = React.createContext()
+
 const todosReducer = (state, action) => {
   switch (action.type) {
     case 'get':
-      console.log('get', action.payload.text)
-      return {...state, todos: action.payload.text}
+      return {...state, todos: action.payload || []}
     case 'add':
-      const addedToDos = [...state.todos, action.payload.text]
+      const addedToDos = [...state.todos, action.payload]
       return {...state, todos: addedToDos}
     case 'delete':
       const filteredTodos = state.todos.filter(
@@ -25,27 +25,25 @@ const todosReducer = (state, action) => {
         todos: filteredTodos,
       }
     case 'edit':
-      const updatedToDo = {...action.payload}
-      const updatedTodoIndex = state.todos.findIndex(
+      const updatedToDo = {...action.payload.text}
+      const updatedToDoIndex = state.todos.findIndex(
         todo => todo.id === action.payload.id
       )
-      // slice the array to get before and after the updated todo
-      // and insert the updated todo in the middle
+      console.log('updatedToDoIndex', updatedToDoIndex)
+      console.log('updatedToDo', updatedToDo)
       const updatedToDos = [
-        ...state.todos.slice(0, updatedTodoIndex),
+        ...state.todos.slice(0, updatedToDoIndex),
         updatedToDo,
-        ...state.todos.slice(updatedTodoIndex + 1),
+        ...state.todos.slice(updatedToDoIndex + 1),
       ]
       return {
         ...state,
         todos: updatedToDos,
       }
     default:
-      return todosInitialState
+      return state
   }
 }
-
-export const TodosContext = React.createContext()
 
 function App() {
   const [state, dispatch] = useReducer(todosReducer, todosInitialState)
