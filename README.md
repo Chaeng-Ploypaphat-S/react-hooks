@@ -1,5 +1,7 @@
 # React Hooks To-Do List
 
+A project-based learning by Greg Lim. Followed Lim's React Crash Course to create a To-Do List application. 
+
 A simple To-Do List application built using React Hooks to demonstrate **C.R.U.D** (Create, Read, Update, Delete) functionality. The app uses `useReducer`, `useContext`, and custom hooks for state management and API interactions.
 
 ![To Do List Demo](image.png)
